@@ -44,6 +44,7 @@ npx shadcn-ui@latest add select
 npx shadcn-ui@latest add checkbox
 npx shadcn-ui@latest add skeleton
 npx shadcn-ui@latest add hover-card
+npx shadcn-ui@latest add dialog
 npm install @tanstack/react-table
 npm install next-cloudinary
 npm install date-fns
