@@ -83,3 +83,8 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/banhcuonbathanh/next_start_over_fe.git
 git push -u origin main
+
+
+
+// cleck
+npm install @clerk/nextjs
