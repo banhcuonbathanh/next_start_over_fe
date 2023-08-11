@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { StoreModal } from "@/components/modals/store-modal";
 
 export const ModalProvider = () => {
+  console.log("this is ModalProvider ");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -20,4 +21,4 @@ export const ModalProvider = () => {
       <StoreModal />
     </>
   );
-}
+};

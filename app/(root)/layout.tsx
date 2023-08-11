@@ -8,6 +8,8 @@ export default async function SetupLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log("this is root lay out");
+  redirect("/sign-in");
   // const { userId } = auth();
 
   // if (!userId) {

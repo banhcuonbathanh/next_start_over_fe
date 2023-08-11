@@ -58,8 +58,10 @@ npm install @headlessui/react
 npm install axios
 npm install react-icons --save
 
+npm install next-auth react react-dom
+npm install bcrypt
 
-
+npm install react-icons
 // git
 git checkout -b new-branch-name
 git push --set-upstream origin feature/dashboard-product

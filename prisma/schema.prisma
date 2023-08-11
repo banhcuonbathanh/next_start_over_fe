@@ -142,10 +142,12 @@ model Image {
 model User {
   id             Int       @id @default(autoincrement())
   email          String    @unique
+  hashedPassword  String?
+   image           String?
   name           String?
-  phone          String?   // New field
-  address        String?   // New field
-  favoriteProductId String?   // Foreign Key to Product for favorite product
+  phone          String
+  address        String
+  favoriteProductId String?  
   favoriteProduct  Product? @relation("FavoriteProduct", fields: [favoriteProductId], references: [id])
   orders          Order[]
 

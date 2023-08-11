@@ -27,6 +27,7 @@ const formSchema = z.object({
 });
 
 export const StoreModal = () => {
+  console.log("this is store modal");
   const storeModal = useStoreModal();
   const router = useRouter();
 

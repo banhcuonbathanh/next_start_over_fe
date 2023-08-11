@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useStoreModal } from "@/hooks/use-store-modal";
 
 const SetupPage = () => {
+  console.log("this is page root");
   const onOpen = useStoreModal((state) => state.onOpen);
   const isOpen = useStoreModal((state) => state.isOpen);
 
