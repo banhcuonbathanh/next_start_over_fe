@@ -77,16 +77,16 @@ favoriteByUsers User[] @relation("FavoriteProduct")
 
 model Order {
   id        String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
+  storeId   String    // Foreign Key to Store
+  store     Store     @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[] // Relation to OrderItem model
-  isPaid     Boolean   @default(false)
-  phone      String    @default("")
-  address    String    @default("")
+  isPaid    Boolean   @default(false)
+  phone     String    @default("")
+  address   String    @default("")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  userId      Int          // Foreign Key to User
-  user        User         @relation(fields: [userId], references: [id])
+  userId    String    // Foreign Key to User, changed Int to String
+  user      User      @relation(fields: [userId], references: [id])
   @@index([storeId])
   @@index([userId])
 }
@@ -140,7 +140,7 @@ model Image {
   @@index([productId])
 }
 model User {
-  id             Int       @id @default(autoincrement())
+  id          String   @id @default(uuid())
   email          String    @unique
   hashedPassword  String?
    image           String?
@@ -150,6 +150,25 @@ model User {
   favoriteProductId String?  
   favoriteProduct  Product? @relation("FavoriteProduct", fields: [favoriteProductId], references: [id])
   orders          Order[]
-
+ accounts          Account[] // Relation with the Account model
   @@index([favoriteProductId])
+}
+model Account {
+  id               String  @id @default(uuid())
+  userId           String
+  type             String
+  provider         String
+  providerAccountId String
+  refreshToken     String?
+  accessToken      String?
+  expiresAt        Int?
+  tokenType        String?
+  scope            String?
+  idToken          String?
+  sessionState     String?
+
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }

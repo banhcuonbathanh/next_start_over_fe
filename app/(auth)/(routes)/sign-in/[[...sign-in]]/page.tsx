@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const signInSchema = z.object({
   email: z.string().email(),
@@ -42,8 +43,18 @@ const SignInModal = () => {
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/signin", values);
-      router.push("/");
+      signIn("credentials", {
+        ...values,
+        redirect: false
+      }).then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid credentials!");
+        }
+
+        if (callback?.ok) {
+          router.push("/");
+        }
+      });
     } catch (error) {
       toast.error("Failed to sign in. Please check your credentials.");
     } finally {

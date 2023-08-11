@@ -77,6 +77,7 @@ npx prisma generate
 npx prisma db push
 npx prisma migrate reset
 install extendtion prisma in vs code : prisma
+npm install next-auth @next-auth/prisma-adapter prisma bcrypt
 
 
 echo "# next_start_over_fe" >> README.md

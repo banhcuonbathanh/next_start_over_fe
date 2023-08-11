@@ -2,6 +2,7 @@
 
 import * as z from "zod";
 import axios from "axios";
+import { signIn, useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -47,10 +48,26 @@ const SignUpModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    console.log(" this is options: api.auth onSubmit");
     try {
       setLoading(true);
-      const response = await axios.post("/api/signup", values);
-      router.push("/"); // or wherever you want to redirect after signup
+      const response = await axios
+        .post("/api/register", values)
+        .then(() =>
+          signIn("credentials", {
+            ...values,
+            redirect: false
+          })
+        )
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Invalid credentials!");
+          }
+
+          if (callback?.ok) {
+            router.push("/");
+          }
+        });
     } catch (error) {
       toast.error("Failed to sign up. Please check your information.");
     } finally {
