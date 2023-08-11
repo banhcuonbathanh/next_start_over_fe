@@ -68,7 +68,7 @@ model Product {
   orderItems  OrderItem[]   // Relation to Order model
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
+favoriteByUsers User[] @relation("FavoriteProduct")
   @@index([storeId])
   @@index([categoryId])
   @@index([sizeId])
@@ -85,8 +85,10 @@ model Order {
   address    String    @default("")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-
+  userId      Int          // Foreign Key to User
+  user        User         @relation(fields: [userId], references: [id])
   @@index([storeId])
+  @@index([userId])
 }
 
 // Intermediary for a many-to-many relationship
@@ -136,4 +138,16 @@ model Image {
   updatedAt   DateTime @updatedAt
 
   @@index([productId])
+}
+model User {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  name           String?
+  phone          String?   // New field
+  address        String?   // New field
+  favoriteProductId String?   // Foreign Key to Product for favorite product
+  favoriteProduct  Product? @relation("FavoriteProduct", fields: [favoriteProductId], references: [id])
+  orders          Order[]
+
+  @@index([favoriteProductId])
 }
